@@ -1,11 +1,6 @@
-import {
-  AppstoreOutlined,
-  DatabaseOutlined,
-  FormatPainterOutlined,
-  TeamOutlined
-} from '@ant-design/icons'
 import { Col, Menu, MenuItem, Row } from '@qonsoll/react-design'
 
+import { AppstoreOutlined } from '@ant-design/icons'
 import { LanguageSelect } from 'domains/Translation/components'
 import { useMemo } from 'react'
 import { useTranslations } from 'contexts/Translation'
