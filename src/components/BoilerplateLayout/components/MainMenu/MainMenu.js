@@ -18,22 +18,22 @@ const MainMenu = () => {
         value: 'DASHBOARD',
         icon: <AppstoreOutlined />,
         text: t('Dashboard')
-      },
-      {
-        value: 'ROLES',
-        icon: <TeamOutlined />,
-        text: t('Roles')
-      },
-      {
-        value: 'STYLING',
-        icon: <FormatPainterOutlined />,
-        text: t('Styling')
-      },
-      {
-        value: 'DB_STRUCTURE',
-        icon: <DatabaseOutlined />,
-        text: t('DB structure')
       }
+      // {
+      //   value: 'ROLES',
+      //   icon: <TeamOutlined />,
+      //   text: t('Roles')
+      // },
+      // {
+      //   value: 'STYLING',
+      //   icon: <FormatPainterOutlined />,
+      //   text: t('Styling')
+      // },
+      // {
+      //   value: 'DB_STRUCTURE',
+      //   icon: <DatabaseOutlined />,
+      //   text: t('DB structure')
+      // }
     ],
     [t]
   )
