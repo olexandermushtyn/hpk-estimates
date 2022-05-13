@@ -41,7 +41,8 @@ const NotFound = () => {
             alignItems={['stretch', 'center']}
             justifyContent={['stretch', 'center']}
           >
-            <IllustrationNotFound
+            <Img
+              src={IllustrationNotFound}
               width={['100%', 400, 480]}
               mt={['auto', 0]}
               mb={[3, 4]}
