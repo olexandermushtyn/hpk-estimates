@@ -1,47 +1,49 @@
-import { Col, Menu, MenuItem, Row } from '@qonsoll/react-design'
+import {
+  TeamOutlined,
+  BookOutlined,
+  FieldBinaryOutlined
+} from '@ant-design/icons'
+import { Menu, MenuItem } from '@qonsoll/react-design'
 
-import { AppstoreOutlined } from '@ant-design/icons'
-import { LanguageSelect } from 'domains/Translation/components'
+import { SemesterSelect } from '../'
 import { useMemo } from 'react'
-import { useTranslations } from 'contexts/Translation'
+import { useHistory } from 'react-router-dom'
 
 const MainMenu = () => {
-  const { t } = useTranslations()
+  const history = useHistory()
   const menuItems = useMemo(
     () => [
       {
-        value: 'DASHBOARD',
-        icon: <AppstoreOutlined />,
-        text: t('Dashboard')
+        value: 'GROUPS',
+        icon: <TeamOutlined />,
+        text: 'Групи',
+        onClick: () => history.push('/groups')
+      },
+      {
+        value: 'LESSONS',
+        icon: <BookOutlined />,
+        text: 'Предмети',
+        onClick: () => history.push('/lessons')
+      },
+      {
+        value: 'MARKS',
+        icon: <FieldBinaryOutlined />,
+        text: 'Оцінки',
+        onClick: () => history.push('/marks')
       }
-      // {
-      //   value: 'ROLES',
-      //   icon: <TeamOutlined />,
-      //   text: t('Roles')
-      // },
-      // {
-      //   value: 'STYLING',
-      //   icon: <FormatPainterOutlined />,
-      //   text: t('Styling')
-      // },
-      // {
-      //   value: 'DB_STRUCTURE',
-      //   icon: <DatabaseOutlined />,
-      //   text: t('DB structure')
-      // }
     ],
-    [t]
+    [history]
   )
   return (
     <>
-      <Row mb={16}>
-        <Col>
-          <LanguageSelect />
-        </Col>
-      </Row>
+      <SemesterSelect />
       <Menu mode="inline">
         {menuItems.map((item, index) => (
-          <MenuItem key={`${item.value}-${index}`} icon={item.icon}>
+          <MenuItem
+            onClick={item.onClick}
+            key={`${item.value}-${index}`}
+            icon={item.icon}
+          >
             {item.text}
           </MenuItem>
         ))}

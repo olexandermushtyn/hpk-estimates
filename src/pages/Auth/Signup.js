@@ -27,8 +27,8 @@ function Signup() {
       alignMiddle
       height="100%"
       headingProps={{
-        title: t('Sign up'),
-        subTitle: t('Create an account easily using any of the methods below'),
+        title: t('Реєстрація'),
+        subTitle: 'Створи аккаунт використовуючи один із методів нижче.',
         textAlign: 'center',
         marginBottom: 40
       }}
@@ -40,8 +40,8 @@ function Signup() {
           googleLogin({ before: toggleLoading, after: toggleLoading })
         }
         redirectToFormWithEmail={redirectToSignInWithEmail}
-        authSwitchText={t('Already have account') + '?'}
-        authSwitchLinktext={t('Login')}
+        authSwitchText={'Вже маєш аккаунт' + '?'}
+        authSwitchLinktext={'Авторизація'}
         authSwitchPath={PATHS.UNAUTHENTICATED.LOGIN}
       />
     </PageWrapper>

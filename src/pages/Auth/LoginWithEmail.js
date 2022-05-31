@@ -27,8 +27,8 @@ const LoginWithEmail = () => {
       alignMiddle
       height="100%"
       headingProps={{
-        title: t('Login with email'),
-        subTitle: t('Please, enter your email and password'),
+        title: t('Авторизація'),
+        subTitle: t('Будь ласка, введіть свій логін і пароль'),
         marginBottom: 40
       }}
       contentWidth={['100%', '100%', 400]}

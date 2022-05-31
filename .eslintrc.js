@@ -29,6 +29,9 @@ module.exports = {
     'no-eval': 'error',
     'import/first': 'error',
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn'
+    'react-hooks/exhaustive-deps': 'warn',
+    'no-unused-vars': 'warn',
+    'react/prop-types': 'off',
+    'no-unsafe-optional-chaining': 'off'
   }
 }

@@ -1,9 +1,9 @@
 const PATHS = {
   CONFIG: {
     DEFAULT: '/auth',
-    AFTER_LOGIN: '/dashboard',
+    AFTER_LOGIN: '/groups',
     AFTER_LOGOUT: '/auth',
-    AFTER_SIGNUP: '/dashboard'
+    AFTER_SIGNUP: '/groups'
   },
   UNAUTHENTICATED: {
     LOGIN: '/auth',
@@ -21,8 +21,23 @@ const PATHS = {
   },
   AUTHENTICATED: {
     DASHBOARD: '/dashboard',
-    USER_SHOW: '/users/:id',
-    USER_EDIT: '/users/:id/edit'
+    USER_SHOW: '/users/:userId',
+    STUDENTS_ALL: '/students',
+    STUDENT_SHOW: '/groups/:groupId/students/:studentId',
+    STUDENT_CREATE: '/student/create',
+    STUDENT_EDIT: '/groups/:groupId/students/:studentId/edit',
+    MARKS_ALL: '/marks',
+    MARK_SHOW: '/marks/:markId',
+    MARK_CREATE: '/mark/create',
+    MARK_EDIT: '/marks/:markId/edit',
+    GROUPS_ALL: '/groups',
+    GROUP_SHOW: '/groups/:groupId',
+    GROUP_CREATE: '/group/create',
+    GROUP_EDIT: '/groups/:groupId/edit',
+    LESSONS_ALL: '/lessons',
+    LESSON_SHOW: '/lessons/:lessonId',
+    LESSON_CREATE: '/lesson/create',
+    LESSON_EDIT: '/lessons/:lessonId/edit'
   }
 }
 

@@ -26,27 +26,24 @@ const Login = () => {
       height="100%"
       headingProps={{
         title: lastSession
-          ? t('Welcome back') + ' 👋'
-          : t('Nice to see you') + ' 💪',
+          ? t('Вітаємо знову!') + ' 👋'
+          : t('Привіт, раді знайомству!') + ' 💪',
         subTitle: lastSession
           ? t(
-              'alreadyKnowEachOther',
-              'It seems that we already know each other. Choose any of the available authorization methods.'
+              'Ми вже знаємо один одного',
+              'Здається ми вже знаємо один оного. Оберіть один з методів авторизації.'
             )
-          : t(
-              'chooseMethodBelow',
-              'Choose any of the available methods below.'
-            ),
+          : t('chooseMethodBelow', 'Обери один з методів авторизації.'),
         marginBottom: 40
       }}
       contentWidth={['100%', '100%', 400]}
     >
       <AuthMethods
-        authTypeText="Login"
+        authTypeText="Авторизація"
         googleAuth={googleLogin}
         redirectToFormWithEmail={redirectToLoginWithEmail}
-        authSwitchText={t('Dont have account') + '?'}
-        authSwitchLinktext={t('Sign up')}
+        authSwitchText={t('Не маєш акаунту') + '?'}
+        authSwitchLinktext={t('Реєстрація')}
         authSwitchPath={PATHS.UNAUTHENTICATED.SIGNUP}
         lastSession={lastSession}
       />

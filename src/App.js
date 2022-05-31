@@ -1,6 +1,7 @@
 import { GDPRPopup } from './domains/App/components'
 import Navigator from './pages/Navigator'
 import { TranslationsProvider } from 'contexts/Translation'
+import { SemesterProvider } from 'contexts/SemesterContext'
 
 /**
  * It returns a React component that renders a TranslationsProvider and a Navigator.
@@ -8,10 +9,12 @@ import { TranslationsProvider } from 'contexts/Translation'
  */
 function App() {
   return (
-    <TranslationsProvider>
-      <Navigator />
-      <GDPRPopup />
-    </TranslationsProvider>
+    <SemesterProvider>
+      <TranslationsProvider>
+        <Navigator />
+        <GDPRPopup />
+      </TranslationsProvider>
+    </SemesterProvider>
   )
 }
 

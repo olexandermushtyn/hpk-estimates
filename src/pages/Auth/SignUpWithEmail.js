@@ -2,10 +2,8 @@ import { PageWrapper } from '@qonsoll/react-design'
 import { SignupForm } from 'domains/Session/components'
 import { useHandleError } from 'hooks'
 import { useSessionActions } from 'domains/Session/hooks'
-import { useTranslations } from 'contexts/Translation'
 
 const SignUpWithEmail = () => {
-  const { t } = useTranslations()
   // [ADDITIONAL_HOOKS]
   const onError = useHandleError()
   const { signup } = useSessionActions()
@@ -15,8 +13,8 @@ const SignUpWithEmail = () => {
       alignMiddle
       height="100%"
       headingProps={{
-        title: t('Sign up with email'),
-        subTitle: t('Please, enter your email and password'),
+        title: 'Реєєстрація через електронну пошту',
+        subTitle: 'Будь ласка заповніть наступні поля',
         marginBottom: 40
       }}
       contentWidth={['100%', '100%', 400]}

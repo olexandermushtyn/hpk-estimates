@@ -47,7 +47,7 @@ const LoginMethods = (props) => {
           prompt: 'select_account'
         },
         clientId:
-          '1044286479835-daqk42j1p13jedivjpn6akp3cgfbvfm6.apps.googleusercontent.com'
+          '376680493154-fgi470dhqlorp0f38du32jog5ovt1o3j.apps.googleusercontent.com'
       }
     ],
     callbacks: {
@@ -69,7 +69,7 @@ const LoginMethods = (props) => {
       <Box>
         <Divider>
           <Text variant="overline" type="secondary">
-            {t('Or')}
+            {t('Або')}
           </Text>
         </Divider>
       </Box>
@@ -87,7 +87,7 @@ const LoginMethods = (props) => {
           icon={<MailOutlined />}
           onClick={redirectToFormWithEmail}
         >
-          {authTypeText} {t('with email')}
+          {authTypeText} {t('через email')}
         </Button>
       )}
       <Box display="flex" justifyContent="center" mt={24}>
