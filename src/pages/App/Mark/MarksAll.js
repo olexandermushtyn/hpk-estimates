@@ -10,7 +10,7 @@ import {
 } from '@qonsoll/react-design'
 
 import { HeaderBreadcrumbs } from 'components'
-import { Empty, Select, Table } from 'antd'
+import { Select } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'contexts/Translation'
@@ -18,7 +18,20 @@ import { useCollectionDataOnce } from 'react-firebase-hooks/firestore'
 import firebase from 'firebase/compat/app'
 import { useSemester } from 'contexts/SemesterContext'
 import { MarksTable } from 'components'
-import { useStudentCurrentAvgMark } from '../../../domains/Student/hooks'
+import {
+  useStudentCurrentAvgMark,
+  useStudentEvaluation
+} from '../../../domains/Student/hooks'
+
+const compare = (a, b) => {
+  if (a.ratingMark > b.ratingMark) {
+    return -1
+  }
+  if (a.ratingMark < b.ratingMark) {
+    return 1
+  }
+  return 0
+}
 
 const chairsMap = {
   ПІ: 'Програмна інженерія',
@@ -63,6 +76,7 @@ export default function MarksAll() {
   )
   const [transofrmationLoading, setTransofrmationLoading] = useState(false)
   const getStudentAvgMark = useStudentCurrentAvgMark()
+  const getStudentEvaluation = useStudentEvaluation()
 
   const currentYear = useMemo(() => {
     const year = semester.year[1].year()
@@ -99,37 +113,55 @@ export default function MarksAll() {
           )
           const { averageMark, isTwelveSystem } = currentAvgMark ?? {}
           const avgSuccess = getAvgSuccess(averageMark, isTwelveSystem)
+          const evaluation = await getStudentEvaluation(
+            group._id,
+            student.data()._id
+          )
 
           data.push({
             ...student.data(),
+            ...evaluation,
             group: group.name,
             groupId: group._id,
             avgMark: averageMark ? averageMark : '-',
-            success: avgSuccess
+            success: avgSuccess,
+            ratingMark: evaluation.totalMark
+              ? avgSuccess + evaluation.totalMark
+              : avgSuccess
+              ? avgSuccess
+              : '-'
           })
         }
         computedStudents.push(...data)
       }
+
       setSuitableStudents(computedStudents)
       setTransofrmationLoading(false)
     }
-  }, [getStudentAvgMark, groupsWithCurrentChairAndCourse])
+  }, [getStudentAvgMark, getStudentEvaluation, groupsWithCurrentChairAndCourse])
 
   const transformedStudents = useMemo(() => {
     const data = []
-    let index = 0
     for (const student of suitableStudents) {
       data.push({
         ...student,
-        index: index + 1,
         pib:
           student.firstName + ' ' + student.lastName + ' ' + student.thirdName
       })
-      index += 1
     }
 
     return data
   }, [suitableStudents])
+
+  const sortedTransformedStudents = useMemo(() => {
+    const data = [...transformedStudents]
+      .map((item) =>
+        item.ratingMark === '-' ? { ...item, ratingMark: 0 } : item
+      )
+      .sort(compare)
+      .map((item, index) => ({ ...item, index: index + 1 }))
+    return data
+  }, [transformedStudents])
 
   useEffect(() => {
     allStudentsFromSuitableGroups()
@@ -201,7 +233,11 @@ export default function MarksAll() {
                   {transofrmationLoading ? (
                     <Spin />
                   ) : (
-                    <MarksTable data={transformedStudents} />
+                    <MarksTable
+                      chair={currentSelectedChair}
+                      course={currentSelectedCourse}
+                      data={sortedTransformedStudents}
+                    />
                   )}
                 </Col>
               </Row>

@@ -1,6 +1,5 @@
 import {
   TeamOutlined,
-  BookOutlined,
   FieldBinaryOutlined,
   NumberOutlined,
   FileTextOutlined
@@ -20,12 +19,6 @@ const MainMenu = () => {
         icon: <TeamOutlined />,
         text: 'Групи',
         onClick: () => history.push('/groups')
-      },
-      {
-        value: 'LESSONS',
-        icon: <BookOutlined />,
-        text: 'Предмети',
-        onClick: () => history.push('/lessons')
       },
       {
         value: 'MARKS',

@@ -4,8 +4,9 @@ import { useMemo } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import firebase from 'firebase/compat/app'
 import { Spin } from '@qonsoll/react-design'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 
-const MarksTable = ({ data }) => {
+const MarksTable = ({ data, course, chair }) => {
   const [evaluations, evaluationsLoading] = useCollectionData(
     firebase.firestore().collection('evalutaions')
   )
@@ -76,35 +77,44 @@ const MarksTable = ({ data }) => {
     })
 
   return !evaluationsLoading ? (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map((headerGroup, index) => (
-          <tr key={index} {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column, index) => (
-              <th key={index} {...column.getHeaderProps()}>
-                {column.render('Header')}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row)
-          return (
-            <tr key={i} {...row.getRowProps()}>
-              {row.cells.map((cell, index) => {
-                return (
-                  <td key={index} {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </td>
-                )
-              })}
+    <>
+      <ReactHTMLTableToExcel
+        table="excel-export-table"
+        filename={`Рейтинг ${chair} ${course} курс`}
+        sheet={`${chair} ${course} курс`}
+        className="ant-btn sc-kDTinF bAWfvq"
+        buttonText="Завантажити в Excel"
+      />
+      <table id="excel-export-table" {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup, index) => (
+            <tr key={index} {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column, index) => (
+                <th key={index} {...column.getHeaderProps()}>
+                  {column.render('Header')}
+                </th>
+              ))}
             </tr>
-          )
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row)
+            return (
+              <tr key={i} {...row.getRowProps()}>
+                {row.cells.map((cell, index) => {
+                  return (
+                    <td key={index} {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </td>
+                  )
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </>
   ) : (
     <Spin />
   )
