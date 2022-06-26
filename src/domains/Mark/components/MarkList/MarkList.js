@@ -14,6 +14,8 @@ const MarkList = (props) => {
   const [selectedItem, setSelectedItem] = useState(null)
   const onEmptySpaceClick = () => setSelectedItem(null)
 
+  console.log(props?.marks?.length > 0)
+
   return (
     <Row onClick={onEmptySpaceClick} ml={-16} mr={-16}>
       {props?.marks?.length > 0 ? (
@@ -63,7 +65,7 @@ const MarkList = (props) => {
       ) : (
         <Empty
           showImage={!props?.isListWithCreate}
-          message={t('No marks')}
+          message={t('Додаткові бали відсутні')}
           onCreateButtonClick={createButtonAction}
         />
       )}

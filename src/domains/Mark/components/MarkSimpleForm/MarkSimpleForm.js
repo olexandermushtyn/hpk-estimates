@@ -1,4 +1,4 @@
-import { Form, Button, InputNumber, Select } from 'antd'
+import { Form, Button, Select } from 'antd'
 import { Box, Text, Title } from '@qonsoll/react-design'
 import PropTypes from 'prop-types'
 import { useTranslations } from 'contexts/Translation'
@@ -17,13 +17,17 @@ const MarkSimpleForm = (props) => {
     firebase.firestore().collection('groups')
   )
 
-  const [lessons, loadingLessons] = useCollectionDataOnce(
-    firebase.firestore().collection('lessons')
+  const [evaluations, loadingEvaluations] = useCollectionDataOnce(
+    firebase.firestore().collection('evalutaions')
   )
 
   const [currentSelectedGroup, setCurrentSelectedGroup] = useState(null)
+  const [currentSelectedEvaluation, setCurrentSelectedEvaluation] =
+    useState(null)
 
   const onCurrentGroupChange = (value) => setCurrentSelectedGroup(value)
+  const onCurrentEvaluationChange = (value) =>
+    setCurrentSelectedEvaluation(value)
 
   const [students, loadingStudents] = useCollectionDataOnce(
     currentSelectedGroup &&
@@ -33,6 +37,17 @@ const MarkSimpleForm = (props) => {
         .doc(currentSelectedGroup)
         .collection('students')
   )
+
+  const [coefficients, coefficientsLoading] = useCollectionDataOnce(
+    currentSelectedEvaluation &&
+      firebase
+        .firestore()
+        .collection('evalutaions')
+        .doc(currentSelectedEvaluation)
+        .collection('coefficients')
+        .orderBy('code')
+  )
+
   return (
     <Form
       form={usedForm}
@@ -91,26 +106,50 @@ const MarkSimpleForm = (props) => {
         </Box>
       )}
       <Form.Item
-        label="Предмет"
-        name="lesson"
-        rules={[{ required: true, message: 'Будь ласка обреріть предемет!' }]}
+        label="Будь ласка критерій додаткового балу!"
+        name="evaluation"
+        rules={[
+          { required: true, message: 'Будь ласка критерій додаткового балу!' }
+        ]}
       >
-        <Select loading={loadingLessons}>
-          {lessons &&
-            lessons?.map((lesson) => (
+        <Select
+          onChange={onCurrentEvaluationChange}
+          loading={loadingEvaluations}
+        >
+          {evaluations &&
+            evaluations?.map((lesson) => (
               <Select.Option key={lesson._id} value={lesson._id}>
                 {lesson.name}
               </Select.Option>
             ))}
         </Select>
       </Form.Item>
-      <Form.Item
-        label="Оцінка"
-        name="rating"
-        rules={[{ required: true, message: 'Будь ласка введіть оцінку!' }]}
-      >
-        <InputNumber placeholder={'Будь ласка введіть оцінку'} />
-      </Form.Item>
+      {currentSelectedEvaluation ? (
+        <Form.Item
+          label="Код оцінки"
+          name="coefficient"
+          rules={[
+            { required: true, message: 'Будь ласка оберіть код оцінки!' }
+          ]}
+        >
+          <Select
+            showSearch
+            optionFilterProp="children"
+            loading={coefficientsLoading}
+          >
+            {currentSelectedEvaluation &&
+              coefficients?.map((coefficient) => (
+                <Select.Option key={coefficient._id} value={coefficient._id}>
+                  {`${coefficient.code}: ${coefficient.name}`}
+                </Select.Option>
+              ))}
+          </Select>
+        </Form.Item>
+      ) : (
+        <Box mb="32px">
+          <Text strong>Для вибору коду оберіть спочатку критерій!</Text>
+        </Box>
+      )}
 
       {!props?.form ? (
         <Form.Item>

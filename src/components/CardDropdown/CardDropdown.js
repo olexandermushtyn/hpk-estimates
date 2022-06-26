@@ -20,7 +20,7 @@ const CardDropdown = ({ handleEdit, handleDelete, children }) => {
               handleEdit()
             }}
           >
-            {t('Edit')}
+            {t('Редагувати')}
           </MenuItem>
           <MenuItem
             key="delete"
@@ -31,7 +31,7 @@ const CardDropdown = ({ handleEdit, handleDelete, children }) => {
               handleDelete()
             }}
           >
-            {t('Delete')}
+            {t('Видалити')}
           </MenuItem>
         </Menu>
       }

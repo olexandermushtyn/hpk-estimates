@@ -7,34 +7,55 @@ const useStudentsActions = () => {
   const [loading, setLoading] = useState(false)
   const [groups] = useCollectionData(firebase.firestore().collection('groups'))
 
-  const existGroups = new Set(groups?.map((group) => group.name))
   const uploadStudents = async (students) => {
     setLoading(true)
+    const existGroups = new Set(groups)
     for (const student of students) {
-      const [lastName, firstName, groupName] = student
+      const [lastName, firstName, thirdName, groupName] = student
       if (lastName && firstName && groupName) {
         const group = Array.from(existGroups).find(
           (group) => group.name === groupName
         )
         if (group) {
-          const newStudentId = await firebase
+          const groupStudentsSnapshot = await firebase
             .firestore()
             .collection('groups')
             .doc(group?._id)
             .collection('students')
-            .doc().id
+            .get()
 
-          await firebase
-            .firestore()
-            .collection('groups')
-            .doc(group?._id)
-            .collection('students')
-            .doc(newStudentId)
-            .set({
-              firstName,
-              lastName,
-              _id: newStudentId
-            })
+          const groupStudents = groupStudentsSnapshot.docs.map((doc) =>
+            doc.data()
+          )
+
+          if (
+            !groupStudents.find(
+              (student) =>
+                student.lastName === lastName &&
+                student.firstName === firstName &&
+                student.thirdName === thirdName
+            )
+          ) {
+            const newStudentId = await firebase
+              .firestore()
+              .collection('groups')
+              .doc(group?._id)
+              .collection('students')
+              .doc().id
+
+            await firebase
+              .firestore()
+              .collection('groups')
+              .doc(group?._id)
+              .collection('students')
+              .doc(newStudentId)
+              .set({
+                firstName,
+                lastName,
+                thirdName,
+                _id: newStudentId
+              })
+          }
         } else {
           const newGroupId = await firebase
             .firestore()

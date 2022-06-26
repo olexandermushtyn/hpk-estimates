@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 export default function StudentMarks(props) {
   const [marks, loading, error] = useStudentMarks(props.student)
+
   return (
     <Container>
       <Row noGutters>
@@ -13,7 +14,7 @@ export default function StudentMarks(props) {
             <Text>Loading...</Text>
           </Col>
         ) : null}
-        {!loading && marks?.length ? (
+        {!loading ? (
           <Col>
             <MarkList hideAddCard marks={marks} />
           </Col>

@@ -10,8 +10,9 @@ export default function StudentShow() {
   const history = useHistory()
   const params = useParams()
   const { studentId } = params
+
   const headingProps = {
-    title: t('Student'),
+    title: t('Студент'),
     titleSize: 2,
     marginBottom: '16px'
   }
@@ -23,7 +24,7 @@ export default function StudentShow() {
           icon={<EditOutlined />}
           onClick={() => history.push(`${studentId}/edit`)}
         >
-          {t('Edit')}
+          {t('Редагування')}
         </Button>
       }
       onBack={() => history?.goBack()}

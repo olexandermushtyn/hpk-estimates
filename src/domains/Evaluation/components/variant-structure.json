@@ -1,0 +1,25 @@
+{
+  "result": {
+    "EvaluationList": [
+      {
+        "EvaluationSimpleView": null
+      },
+      {
+        "EvaluationFilter": [
+          {
+            "EvaluationSubfilter": null
+          }
+        ]
+      },
+      {
+        "EvaluationSortMenu": null
+      }
+    ]
+  },
+  "flatStructure": [
+    "EvaluationSortMenu",
+    "EvaluationFilter",
+    "EvaluationSimpleView",
+    "EvaluationList"
+  ]
+}

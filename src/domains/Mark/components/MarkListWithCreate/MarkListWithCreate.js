@@ -29,11 +29,11 @@ const MarkListWithCreate = ({ marks, setMarks }) => {
     <Container>
       <Row>
         <Col pl="0px">
-          <Title level={4}>Marks</Title>
+          <Title level={4}>Оцінки</Title>
         </Col>
       </Row>
       {isAdded ? (
-        <Row>
+        <Row noGutters>
           <Col my="20px">
             <Form layout="vertical" form={form}>
               <Form.Item
@@ -65,7 +65,7 @@ const MarkListWithCreate = ({ marks, setMarks }) => {
       ) : (
         <></>
       )}
-      <Col mt="12px">
+      <Col noGutters mt="12px">
         <MarkList
           isListWithCreate
           onCreateButtonClick={onAddButtonClick}

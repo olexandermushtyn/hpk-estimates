@@ -15,6 +15,7 @@ const SemesterSelect = () => {
         <RangePicker
           onChange={changeYear}
           value={semester?.year}
+          yearStep={1}
           placeholder={['Рік початку', 'Рік закінчення']}
           picker="year"
         />

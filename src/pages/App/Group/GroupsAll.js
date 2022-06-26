@@ -62,44 +62,50 @@ export default function GroupsAll() {
   return (
     <PageWrapper
       action={
-        groups?.length > 0 && (
-          <Row noGutters>
-            <Col cw="auto">
-              <Tooltip title="Змінити вигляд списку">
-                <Button
-                  onClick={() => setListView(!listView)}
-                  icon={
-                    listView ? <AppstoreOutlined /> : <UnorderedListOutlined />
-                  }
-                />
-              </Tooltip>
-            </Col>
-            <Col ml="8px" cw="auto">
-              <Tooltip title="Відкрити меню сортування">
-                <Popover
-                  content={
-                    <GroupSortMenu
-                      filteredData={filterData}
-                      setFilteredData={setFilterData}
-                    />
-                  }
-                  trigger="click"
-                >
-                  <Button icon={<SortAscendingOutlined />} />
-                </Popover>
-              </Tooltip>
-            </Col>
-            <Col ml="8px" cw="auto">
-              <Tooltip title="Імпортувати данні з Excel">
-                <Button onClick={showModal} icon={<TableOutlined />} />
-                <UploadModal
-                  isModalVisible={isModalVisible}
-                  setIsModalVisible={setIsModalVisible}
-                />
-              </Tooltip>
-            </Col>
-          </Row>
-        )
+        <Row noGutters>
+          {groups?.length > 0 && (
+            <>
+              <Col cw="auto">
+                <Tooltip title="Змінити вигляд списку">
+                  <Button
+                    onClick={() => setListView(!listView)}
+                    icon={
+                      listView ? (
+                        <AppstoreOutlined />
+                      ) : (
+                        <UnorderedListOutlined />
+                      )
+                    }
+                  />
+                </Tooltip>
+              </Col>
+              <Col ml="8px" cw="auto">
+                <Tooltip title="Відкрити меню сортування">
+                  <Popover
+                    content={
+                      <GroupSortMenu
+                        filteredData={filterData}
+                        setFilteredData={setFilterData}
+                      />
+                    }
+                    trigger="click"
+                  >
+                    <Button icon={<SortAscendingOutlined />} />
+                  </Popover>
+                </Tooltip>
+              </Col>
+            </>
+          )}
+          <Col ml="8px" cw="auto">
+            <Tooltip title="Імпортувати данні з Excel">
+              <Button onClick={showModal} icon={<TableOutlined />} />
+              <UploadModal
+                isModalVisible={isModalVisible}
+                setIsModalVisible={setIsModalVisible}
+              />
+            </Tooltip>
+          </Col>
+        </Row>
       }
       onBack={() => history?.goBack()}
       breadcrumbs={<HeaderBreadcrumbs />}

@@ -1,23 +1,21 @@
-import { useEffect, useState } from 'react'
-
-import { getDocument } from 'services/firestore'
+import { useParams } from 'react-router-dom'
+import firebase from 'firebase/compat/app'
+import { useCollectionDataOnce } from 'react-firebase-hooks/firestore'
 
 export default function useStudentMarks(student) {
-  const [marks, setMarks] = useState([])
-  const [loading, setLoading] = useState(false)
+  const params = useParams()
+  const { groupId, studentId } = params
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      const promises =
-        student && student?.marks?.map((mark) => getDocument('marks', mark))
-      const data = promises && (await Promise.all(promises))
-      setMarks(data)
-      setLoading(false)
-    }
-
-    fetchData()
-  }, [student])
-
+  const [marks, loading] = useCollectionDataOnce(
+    groupId &&
+      studentId &&
+      firebase
+        .firestore()
+        .collection('groups')
+        .doc(groupId)
+        .collection('students')
+        .doc(studentId)
+        .collection('marks')
+  )
   return [marks, loading]
 }

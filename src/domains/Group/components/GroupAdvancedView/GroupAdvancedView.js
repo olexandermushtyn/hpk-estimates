@@ -1,4 +1,4 @@
-import { Col, Container, Divider, Row, Spin, Text } from '@qonsoll/react-design'
+import { Col, Container, Row, Spin, Text } from '@qonsoll/react-design'
 import { Sticky, StickyContainer } from 'react-sticky'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 

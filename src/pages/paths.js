@@ -37,7 +37,11 @@ const PATHS = {
     LESSONS_ALL: '/lessons',
     LESSON_SHOW: '/lessons/:lessonId',
     LESSON_CREATE: '/lesson/create',
-    LESSON_EDIT: '/lessons/:lessonId/edit'
+    LESSON_EDIT: '/lessons/:lessonId/edit',
+    EVALUATIONS_ALL: '/evaluations',
+    EVALUATION_SHOW: '/evaluations/:evaluationId',
+    STATUSES_ALL: '/statuses',
+    STATUS_SHOW: '/statuses/:evaluationId'
   }
 }
 

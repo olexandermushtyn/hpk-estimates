@@ -12,15 +12,17 @@ export default function StudentEdit() {
   const { t } = useTranslations()
   const history = useHistory()
   const headingProps = {
-    title: t('Edit student'),
+    title: t('Редагування студента'),
     titleSize: 2,
     marginBottom: '16px'
   }
   const params = useParams()
-  const [loading, setLoading] = useState(true)
-  const { studentId } = params
+  const [loading, setLoading] = useState(false)
+  const { studentId, groupId } = params
 
-  const [student] = useDocument({ ref: `students/${studentId}` })
+  const [student] = useDocument({
+    ref: `groups/${groupId}/students/${studentId}`
+  })
   const [marks] = useStudentMarks(student)
 
   useEffect(() => {

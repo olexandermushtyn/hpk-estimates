@@ -46,7 +46,6 @@ const UploadModal = ({ isModalVisible, setIsModalVisible }) => {
       if (err) {
         console.error(err)
       } else {
-        console.log(resp)
         setTableData(resp.rows)
       }
     })

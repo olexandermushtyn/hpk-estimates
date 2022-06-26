@@ -3,12 +3,13 @@ import { StudentsAll, StudentShow, StudentCreate, StudentEdit } from './Student'
 import { MarksAll, MarkShow, MarkCreate, MarkEdit } from './Mark'
 import { GroupsAll, GroupShow, GroupCreate, GroupEdit } from './Group'
 import { LessonsAll, LessonShow, LessonCreate, LessonEdit } from './Lesson'
-
+import { StatusesAll } from './Status'
+import EvaluationsAll from './Evaluation/EvaluationsAll'
+import { EvaluationShow } from './Evaluation'
 import { BoilerplateLayout } from 'components'
 import Dashboard from './Dashboard/Dashboard'
 import { UserShow } from './User'
 import PATHS from '../paths'
-import { SemesterProvider } from 'contexts/SemesterContext'
 
 const {
   DASHBOARD,
@@ -28,7 +29,11 @@ const {
   LESSONS_ALL,
   LESSON_SHOW,
   LESSON_CREATE,
-  LESSON_EDIT
+  LESSON_EDIT,
+  EVALUATIONS_ALL,
+  EVALUATION_SHOW,
+  STATUSES_ALL,
+  STATUS_SHOW
 } = PATHS.AUTHENTICATED
 
 const routes = [
@@ -79,7 +84,25 @@ const routes = [
     component: LessonCreate,
     exact: true
   },
-  { key: 'LESSON_EDIT', path: LESSON_EDIT, component: LessonEdit, exact: true }
+  { key: 'LESSON_EDIT', path: LESSON_EDIT, component: LessonEdit, exact: true },
+  {
+    key: 'EVALUATIONS_ALL',
+    path: EVALUATIONS_ALL,
+    component: EvaluationsAll,
+    exact: true
+  },
+  {
+    key: 'EVALUATION_SHOW',
+    path: EVALUATION_SHOW,
+    component: EvaluationShow,
+    exact: true
+  },
+  {
+    key: 'STATUSES_ALL',
+    path: STATUSES_ALL,
+    component: StatusesAll,
+    exact: true
+  }
 ]
 
 const App = () => {

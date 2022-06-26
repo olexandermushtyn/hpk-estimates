@@ -1,16 +1,16 @@
-import {
-  createDocument,
-  saveHasManyRelationship,
-  updateDocument
-} from 'services/firestore'
-
+import { createDocument, updateDocument } from 'services/firestore'
+import firebase from 'firebase/compat/app'
 import { Student } from 'models'
 import { message } from 'antd'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { useState } from 'react'
+import { useSemester } from 'contexts/SemesterContext'
 
 const useAdvancedFormActions = ({ initialData, form, marks, setMarks }) => {
   const history = useHistory()
+  const params = useParams()
+  const { semester } = useSemester()
+  const { groupId, studentId } = params
   const [loading, setLoading] = useState(false)
 
   const onFinish = async () => {
@@ -30,22 +30,59 @@ const useAdvancedFormActions = ({ initialData, form, marks, setMarks }) => {
       return
     } else {
       if (!initialData) {
-        createDocument('students', {
-          ...form.getFieldsValue(),
-          marks: await saveHasManyRelationship('marks', marks)
+        createDocument(`groups/${groupId}/student`, {
+          ...form.getFieldsValue()
         }).then(() => {
-          message.success('Student created successfully')
-          history.goBack()
+          message.success('Студента успішно створено')
+          history.push(`/groups/${groupId}/students`)
         })
       } else {
-        const { student } = initialData
-        updateDocument('students', student?._id, {
-          ...form.getFieldsValue(),
-          marks: await saveHasManyRelationship('marks', marks)
-        }).then(() => {
-          message.success('Student successfully updated')
-          history.goBack()
+        const {
+          firstName,
+          lastName,
+          educationSystem,
+          isTwelveSystem,
+          averageMark
+        } = form.getFieldsValue()
+        const currentYears = semester.year.map((year) => year.year())
+        const currentSemester = semester.semester
+        const newAvgMarkId = firebase
+          .firestore()
+          .collection('groups')
+          .doc(groupId)
+          .collection('students')
+          .doc(studentId)
+          .collection('avgMarks')
+          .doc().id
+
+        updateDocument(`groups/${groupId}/students`, studentId, {
+          _id: studentId,
+          firstName,
+          lastName,
+          educationSystem: educationSystem ?? 'BUDGET'
         })
+          .then(() => {
+            firebase
+              .firestore()
+              .collection('groups')
+              .doc(groupId)
+              .collection('students')
+              .doc(studentId)
+              .collection('avgMarks')
+              .doc(newAvgMarkId)
+              .set({
+                _id: newAvgMarkId,
+                semester: currentSemester,
+                year: currentYears,
+                isTwelveSystem: isTwelveSystem ?? false,
+                averageMark: averageMark ?? 0
+              })
+          })
+          .then(() => {
+            message.success('Студента успішно оновлено')
+            history.push(`/groups/${groupId}/students/${studentId}`)
+          })
+        setLoading(false)
       }
     }
   }
@@ -53,7 +90,7 @@ const useAdvancedFormActions = ({ initialData, form, marks, setMarks }) => {
   const onReset = () => {
     form.resetFields()
     setMarks([])
-    history.push('/students')
+    history.push(`/groups/${groupId}/students/${studentId}`)
   }
 
   return { onFinish, onReset, loading }

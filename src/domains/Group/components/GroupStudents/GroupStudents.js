@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 export default function GroupStudents(props) {
   const [students, loading, error] = useGroupStudents(props.group)
+
   return (
     <Container>
       <Row noGutters>

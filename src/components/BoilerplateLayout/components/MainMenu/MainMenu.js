@@ -1,7 +1,9 @@
 import {
   TeamOutlined,
   BookOutlined,
-  FieldBinaryOutlined
+  FieldBinaryOutlined,
+  NumberOutlined,
+  FileTextOutlined
 } from '@ant-design/icons'
 import { Menu, MenuItem } from '@qonsoll/react-design'
 
@@ -30,6 +32,18 @@ const MainMenu = () => {
         icon: <FieldBinaryOutlined />,
         text: 'Оцінки',
         onClick: () => history.push('/marks')
+      },
+      {
+        value: 'EVALUTAIONS',
+        icon: <NumberOutlined />,
+        text: 'Критерії оцінювання',
+        onClick: () => history.push('/evaluations')
+      },
+      {
+        value: 'STATUSES',
+        icon: <FileTextOutlined />,
+        text: 'Примітки',
+        onClick: () => history.push('/statuses')
       }
     ],
     [history]

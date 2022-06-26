@@ -19,7 +19,7 @@ const StudentSimpleForm = (props) => {
     >
       <Title level={4}>{props?.showTitle && 'Student'}</Title>
       <Form.Item
-        label="FirstName"
+        label="Ім'я"
         name="firstName"
         rules={[{ required: true, message: t('Please enter your firstName!') }]}
       >
@@ -30,7 +30,7 @@ const StudentSimpleForm = (props) => {
         />
       </Form.Item>
       <Form.Item
-        label="LastName"
+        label="Прізвище"
         name="lastName"
         rules={[{ required: true, message: t('Please enter your lastName!') }]}
       >

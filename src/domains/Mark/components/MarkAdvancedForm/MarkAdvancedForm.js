@@ -1,5 +1,5 @@
 import MarkSimpleForm from '../MarkSimpleForm'
-import { Form } from 'antd'
+import { Form, message } from 'antd'
 import { Button, Row } from '@qonsoll/react-design'
 import useAdvancedFormActions from './hooks/useAdvancedFormActions'
 import { useSemester } from 'contexts/SemesterContext'
@@ -24,28 +24,33 @@ const MarkAdvancedForm = (props) => {
       semester: semester.semester
     }
 
-    const newMarkId = await firebase
-      .firestore()
-      .collection('groups')
-      .doc(group)
-      .collection('students')
-      .doc(student)
-      .collection('marks')
-      .doc().id
+    if (group && student) {
+      const newMarkId = await firebase
+        .firestore()
+        .collection('groups')
+        .doc(group)
+        .collection('students')
+        .doc(student)
+        .collection('marks')
+        .doc().id
 
-    await firebase
-      .firestore()
-      .collection('groups')
-      .doc(group)
-      .collection('students')
-      .doc(student)
-      .collection('marks')
-      .doc(newMarkId)
-      .set(mark)
+      await firebase
+        .firestore()
+        .collection('groups')
+        .doc(group)
+        .collection('students')
+        .doc(student)
+        .collection('marks')
+        .doc(newMarkId)
+        .set(mark)
 
-    setLoading(false)
+      setLoading(false)
 
-    history.push('/marks')
+      history.push('/marks')
+    } else {
+      message.error('Виберіть групу та студента!')
+      setLoading(false)
+    }
   }
 
   return (

@@ -1,5 +1,5 @@
 import { SemesterContext } from '.'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import moment from 'moment'
 
 const SemesterProvider = ({ children }) => {
@@ -7,7 +7,7 @@ const SemesterProvider = ({ children }) => {
     if (localStorage.getItem('semester')) {
       const data = JSON.parse(localStorage.getItem('semester'))
       const { year, semester } = data
-      const transformedYear = year.map((item) => moment(item))
+      const transformedYear = year?.map((item) => moment(item))
       return {
         year: transformedYear,
         semester
@@ -24,6 +24,10 @@ const SemesterProvider = ({ children }) => {
   }
 
   const [currentDate, setSemester] = useState(getInitialState())
+  const currentYears = useMemo(
+    () => currentDate.year.map((year) => year.year()),
+    [currentDate.year]
+  )
 
   const changeYear = (year) => {
     setSemester({ ...currentDate, year })
@@ -40,7 +44,12 @@ const SemesterProvider = ({ children }) => {
 
   return (
     <SemesterContext.Provider
-      value={{ semester: currentDate, changeYear, changeSemester }}
+      value={{
+        semester: currentDate,
+        changeYear,
+        changeSemester,
+        currentYears
+      }}
     >
       {children}
     </SemesterContext.Provider>

@@ -28,7 +28,7 @@ const Empty = (props) => {
             onClick={props?.onCreateButtonClick}
             type="primary"
           >
-            {t('Create')}
+            {t('Додати')}
           </Button>
         </Col>
       </Row>
